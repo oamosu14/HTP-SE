@@ -21,6 +21,7 @@ $ProjectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 . "$ProjectRoot\src\Core\Logger.ps1"
 . "$ProjectRoot\src\Core\JsonLogger.ps1"
 . "$ProjectRoot\src\Core\State.ps1"
+. "$ProjectRoot\src\Agent\ModuleManager.ps1"
 
 #
 # Initialize Application
@@ -63,3 +64,4 @@ Write-Host ""
 #
 $Global:HTPContext = $Context
 $Global:HTPState   = $State
+Start-HTPModules -Context $Context
