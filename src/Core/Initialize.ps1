@@ -1,7 +1,7 @@
 <#
     HTP Secure Endpoint
     Module : Initialization Engine
-    Version: 3.0.0-alpha2
+    Version: 3.1.0-dev
 #>
 
 Set-StrictMode -Version Latest
@@ -12,18 +12,19 @@ function Start-HTPInitialization {
     [CmdletBinding()]
     param()
 
+    $Config = Get-HTPConfiguration
+
     Write-Host ""
     Write-Host "========================================"
     Write-Host " HTP Secure Endpoint"
-    Write-Host " Version 3.0.0-alpha2"
+    Write-Host " Version $($Config.Version)"
     Write-Host "========================================"
     Write-Host ""
 
-    $config = Get-HTPConfiguration
+    Write-Host "Product     : $($Config.ProductName)"
+    Write-Host "Version     : $($Config.Version)"
+    Write-Host "Company     : $($Config.Company)"
+    Write-Host "Environment : $($Config.Environment)"
 
-    Write-Host "Product :" $config.ProductName
-    Write-Host "Version :" $config.Version
-    Write-Host "Company :" $config.Company
-
-    return $config
+    return $Config
 }

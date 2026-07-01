@@ -1,13 +1,13 @@
 <#
     HTP Secure Endpoint
     Module : Internet Policy Engine
-    Version: 3.0.0-alpha2
+    Version: 3.1.0-dev
 #>
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-function Test-HTPInternetAccess {
+function Get-HTPInternetPolicy {
 
     [CmdletBinding()]
     param(
@@ -18,8 +18,31 @@ function Test-HTPInternetAccess {
 
     if ($State.Internet.Approved) {
 
-        return $true
+        return [PSCustomObject]@{
+
+            Allowed = $true
+            Reason  = "Approved"
+        }
     }
 
-    return $false
+    return [PSCustomObject]@{
+
+        Allowed = $false
+        Reason  = "AwaitingApproval"
+    }
+}
+
+#
+# Backward compatibility
+#
+function Test-HTPInternetAccess {
+
+    [CmdletBinding()]
+    param(
+
+        [Parameter(Mandatory)]
+        [pscustomobject]$State
+    )
+
+    return (Get-HTPInternetPolicy -State $State).Allowed
 }

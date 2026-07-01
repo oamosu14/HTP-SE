@@ -1,7 +1,7 @@
 <#
     HTP Secure Endpoint
     Application : Agent Bootstrap
-    Version     : 3.0.0-alpha2
+    Version     : 3.1.0-dev
 #>
 
 Set-StrictMode -Version Latest
@@ -43,6 +43,16 @@ $Context = New-HTPRuntimeContext
 $State = Get-HTPState -Context $Context
 
 #
+# Refresh Boot State
+#
+$State.Boot.Session = $Context.SessionId
+$State.Boot.StartTime = $Context.StartTime
+
+Save-HTPState `
+    -Context $Context `
+    -State $State
+
+#
 # Startup Logs
 #
 Write-HTPLog `
@@ -68,4 +78,8 @@ Write-Host ""
 #
 $Global:HTPContext = $Context
 $Global:HTPState   = $State
+
+#
+# Start Modules
+#
 Start-HTPModules -Context $Context

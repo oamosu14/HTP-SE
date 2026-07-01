@@ -1,7 +1,7 @@
 <#
     HTP Secure Endpoint
     Module : Chrome Monitor
-    Version: 3.0.0-alpha2
+    Version: 3.1.0-dev
 #>
 
 Set-StrictMode -Version Latest
@@ -18,16 +18,60 @@ function Get-HTPChromeStatus {
 
     if ($Process) {
 
-        return [pscustomobject]@{
-            Running = $true
+        return [PSCustomObject]@{
+            Running      = $true
             ProcessCount = @($Process).Count
         }
     }
 
-    return [pscustomobject]@{
-        Running = $false
+    return [PSCustomObject]@{
+        Running      = $false
         ProcessCount = 0
     }
+}
+
+function Invoke-HTPChromePolicy {
+
+    [CmdletBinding()]
+    param()
+
+    $Status = Get-HTPChromeStatus
+
+    if (-not $Status.Running) {
+
+        Write-Host "Chrome Monitor : Chrome is not running."
+        return
+    }
+
+    Write-Host "Chrome Monitor : Chrome is running ($($Status.ProcessCount) process(es))."
+
+    $Policy = Get-HTPInternetPolicy `
+        -State $Global:HTPState
+
+    if ($Policy.Allowed) {
+
+        Write-Host "Internet Policy : Approved"
+        return
+    }
+
+    if ($Global:HTPState.Chrome.NotificationSent) {
+
+        Write-Host "Internet Policy : Approval pending."
+        return
+    }
+
+    Send-HTPNotification `
+        -Context $Global:HTPContext `
+        -Title "HTP Secure Endpoint" `
+        -Message "Chrome is requesting Internet access."
+
+    $Global:HTPState.Chrome.NotificationSent = $true
+
+    Save-HTPState `
+        -Context $Global:HTPContext `
+        -State $Global:HTPState
+
+    Write-Host "Internet Policy : Approval request sent."
 }
 
 function Start-HTPModule {
@@ -35,14 +79,5 @@ function Start-HTPModule {
     [CmdletBinding()]
     param()
 
-    $Status = Get-HTPChromeStatus
-
-    if ($Status.Running) {
-
-        Write-Host "Chrome Monitor : Chrome is running ($($Status.ProcessCount) process(es))."
-    }
-    else {
-
-        Write-Host "Chrome Monitor : Chrome is not running."
-    }
+    Invoke-HTPChromePolicy
 }
