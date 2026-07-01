@@ -1,0 +1,22 @@
+{
+    "ProductName": "Habims Tech Pulse Secure Endpoint",
+    "ShortName": "HTP-SE",
+    "Version": "3.0.0-alpha2",
+
+    "Company": "Habims",
+
+    "Logging": {
+        "TextLog": true,
+        "JsonLog": true,
+        "LogDirectory": "C:\\ProgramData\\Habims\\HTP-SE\\Logs"
+    },
+
+    "State": {
+        "Directory": "C:\\ProgramData\\Habims\\HTP-SE\\State"
+    },
+
+    "Notifications": {
+        "Provider": "Pushover",
+        "Enabled": true
+    }
+}
