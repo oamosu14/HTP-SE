@@ -1,7 +1,0 @@
-{"Timestamp":"2026-06-30T20:21:32.7832138-04:00","SessionId":"HTP-20260630-202123","Product":"Habims Tech Pulse Secure Endpoint","Version":"3.0.0-alpha2","Module":"Core","Level":"INFO","Message":"JSON Logging Engine Initialized"}
-{"Timestamp":"2026-06-30T20:39:03.2329705-04:00","SessionId":"HTP-20260630-203903","Product":"Habims Tech Pulse Secure Endpoint","Version":"3.0.0-alpha2","Module":"Agent","Level":"INFO","Message":"HTP Agent Started"}
-{"Timestamp":"2026-06-30T20:55:56.2340405-04:00","SessionId":"HTP-20260630-205536","Product":"Habims Tech Pulse Secure Endpoint","Version":"3.0.0-alpha2","Module":"Notification","Level":"INFO","Message":"Pushover notification sent."}
-{"Timestamp":"2026-06-30T21:13:41.2470187-04:00","SessionId":"HTP-20260630-211341","Product":"Habims Tech Pulse Secure Endpoint","Version":"3.0.0-alpha2","Module":"Agent","Level":"INFO","Message":"HTP Agent Started"}
-{"Timestamp":"2026-06-30T21:13:41.2580409-04:00","SessionId":"HTP-20260630-211341","Product":"Habims Tech Pulse Secure Endpoint","Version":"3.0.0-alpha2","Module":"ModuleManager","Level":"INFO","Message":"Module Manager started."}
-{"Timestamp":"2026-06-30T21:17:47.0278271-04:00","SessionId":"HTP-20260630-211747","Product":"Habims Tech Pulse Secure Endpoint","Version":"3.0.0-alpha2","Module":"Agent","Level":"INFO","Message":"HTP Agent Started"}
-{"Timestamp":"2026-06-30T21:17:47.0379511-04:00","SessionId":"HTP-20260630-211747","Product":"Habims Tech Pulse Secure Endpoint","Version":"3.0.0-alpha2","Module":"ModuleManager","Level":"INFO","Message":"Module Manager started."}

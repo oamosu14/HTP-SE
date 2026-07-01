@@ -1,0 +1,12 @@
+# Runtime logs
+data/Logs/*.log
+data/Logs/*.json
+
+# Runtime state
+data/State/*.json
+
+# VS Code
+.vscode/
+
+# PowerShell
+*.psd1.bak
