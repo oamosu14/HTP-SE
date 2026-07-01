@@ -13,15 +13,19 @@ $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 
 #
-# Load Core Modules
+# Load Core Loader
 #
-. "$ProjectRoot\src\Core\Config.ps1"
-. "$ProjectRoot\src\Core\Initialize.ps1"
-. "$ProjectRoot\src\Core\Runtime.ps1"
-. "$ProjectRoot\src\Core\Logger.ps1"
-. "$ProjectRoot\src\Core\JsonLogger.ps1"
-. "$ProjectRoot\src\Core\State.ps1"
+. "$ProjectRoot\src\Core\CoreLoader.ps1"
+
+#
+# Load Agent Components
+#
 . "$ProjectRoot\src\Agent\ModuleManager.ps1"
+
+#
+# Validate Configuration
+#
+Test-HTPConfiguration | Out-Null
 
 #
 # Initialize Application

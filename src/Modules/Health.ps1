@@ -7,4 +7,10 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-Write-Host "Health Module Loaded"
+function Start-HTPModule {
+
+    [CmdletBinding()]
+    param()
+
+    Write-Host "Health Module Loaded"
+}
