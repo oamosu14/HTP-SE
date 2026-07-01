@@ -16,7 +16,10 @@
     },
 
     "Notifications": {
-        "Provider": "Pushover",
-        "Enabled": true
+    "Provider": "Pushover",
+    "Enabled": true,
+    "ApiToken": "apf1xob687trozwgyuz42op4u4p91b",
+    "UserKey": "ur7mb89usinx6m371fgga6ohp9smoj"
+    
     }
 }
