@@ -7,61 +7,45 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-function Get-HTPStateFilePath {
-
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory)]
-        [pscustomobject]$Context
-    )
-
-    return (Join-Path `
-        -Path $Context.StateDirectory `
-        -ChildPath "htp-state.json")
-}
-
 function Get-HTPState {
 
     [CmdletBinding()]
     param(
+
         [Parameter(Mandatory)]
         [pscustomobject]$Context
     )
 
-    if (-not (Test-Path $Context.StateDirectory)) {
-
-        New-Item `
-            -ItemType Directory `
-            -Path $Context.StateDirectory `
-            -Force | Out-Null
-    }
-
-    $StateFile = Get-HTPStateFilePath -Context $Context
+    $StateFile = Join-Path `
+        -Path $Context.StateDirectory `
+        -ChildPath "htp-state.json"
 
     if (-not (Test-Path $StateFile)) {
 
-        $InitialState = @{
-            Boot = @{
+        $State = [pscustomobject]@{
+
+            Chrome = [pscustomobject]@{
+                NotificationSent = $false
+                Approved         = $false
+            }
+
+            Boot = [pscustomobject]@{
                 Session   = $Context.SessionId
                 StartTime = $Context.StartTime
             }
 
-            Internet = @{
+            Internet = [pscustomobject]@{
                 Approved = $false
-            }
-
-            Chrome = @{
-                Approved        = $false
-                NotificationSent = $false
             }
         }
 
-        $InitialState |
-            ConvertTo-Json -Depth 5 |
-            Set-Content $StateFile
+        $State | ConvertTo-Json -Depth 10 | Set-Content $StateFile
+
+        return $State
     }
 
-    return Get-Content $StateFile -Raw | ConvertFrom-Json
+    Get-Content $StateFile -Raw |
+        ConvertFrom-Json
 }
 
 function Save-HTPState {
@@ -73,10 +57,12 @@ function Save-HTPState {
         [pscustomobject]$Context,
 
         [Parameter(Mandatory)]
-        $State
+        [pscustomobject]$State
     )
 
-    $StateFile = Get-HTPStateFilePath -Context $Context
+    $StateFile = Join-Path `
+        -Path $Context.StateDirectory `
+        -ChildPath "htp-state.json"
 
     $State |
         ConvertTo-Json -Depth 10 |

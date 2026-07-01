@@ -1,0 +1,13 @@
+{
+  "Chrome": {
+    "NotificationSent": false,
+    "Approved": false
+  },
+  "Boot": {
+    "Session": "HTP-20260630-202744",
+    "StartTime": "2026-06-30T20:27:44.7382448-04:00"
+  },
+  "Internet": {
+    "Approved": false
+  }
+}

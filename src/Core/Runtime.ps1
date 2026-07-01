@@ -1,7 +1,7 @@
 <#
     HTP Secure Endpoint
     Module : Runtime Context
-    Version: 3.0.0-alpha2
+    Version: 3.1.0-dev
 #>
 
 Set-StrictMode -Version Latest
@@ -24,16 +24,17 @@ function New-HTPRuntimeContext {
 
         Company = $Configuration.Company
 
+        Environment = $Configuration.Environment
+
         Configuration = $Configuration
 
         SessionId = $SessionId
 
-        LogDirectory = $Configuration.Logging.LogDirectory
+        LogDirectory = $Configuration.Paths.LogDirectory
 
-        StateDirectory = $Configuration.State.Directory
+        StateDirectory = $Configuration.Paths.StateDirectory
 
         StartTime = Get-Date
-
     }
 
     return $Context

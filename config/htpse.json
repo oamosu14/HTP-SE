@@ -1,25 +1,26 @@
 {
     "ProductName": "Habims Tech Pulse Secure Endpoint",
     "ShortName": "HTP-SE",
-    "Version": "3.0.0-alpha2",
-
+    "Version": "3.1.0-dev",
     "Company": "Habims",
+
+    "Environment": "Development",
+
+    "Paths": {
+        "Root": "C:\\Projects\\HTP-SE\\data",
+        "LogDirectory": "C:\\Projects\\HTP-SE\\data\\Logs",
+        "StateDirectory": "C:\\Projects\\HTP-SE\\data\\State"
+    },
 
     "Logging": {
         "TextLog": true,
-        "JsonLog": true,
-        "LogDirectory": "C:\\ProgramData\\Habims\\HTP-SE\\Logs"
-    },
-
-    "State": {
-        "Directory": "C:\\ProgramData\\Habims\\HTP-SE\\State"
+        "JsonLog": true
     },
 
     "Notifications": {
-    "Provider": "Pushover",
-    "Enabled": true,
-    "ApiToken": "apf1xob687trozwgyuz42op4u4p91b",
-    "UserKey": "ur7mb89usinx6m371fgga6ohp9smoj"
-    
+        "Provider": "Pushover",
+        "Enabled": true,
+        "ApiToken": "apf1xob687trozwgyuz42op4u4p91b",
+        "UserKey": "ur7mb89usinx6m371fgga6ohp9smoj"
     }
 }

@@ -1,7 +1,7 @@
 <#
     HTP Secure Endpoint
     Module : Configuration Validator
-    Version: 3.0.0-alpha2
+    Version: 3.1.0-dev
 #>
 
 Set-StrictMode -Version Latest
@@ -19,22 +19,34 @@ function Test-HTPConfiguration {
     $Config = Get-HTPConfiguration
 
     #
-    # Logging
+    # Environment
     #
-    if (-not $Config.Logging.LogDirectory) {
-        throw "Logging.LogDirectory is missing."
+    if (-not $Config.Environment) {
+        throw "Environment is missing."
     }
 
-    Write-Host "[OK] Logging"
+    Write-Host "[OK] Environment"
 
     #
-    # State
+    # Paths
     #
-    if (-not $Config.State.Directory) {
-        throw "State.Directory is missing."
+    if (-not $Config.Paths) {
+        throw "Paths section is missing."
     }
 
-    Write-Host "[OK] State"
+    if (-not $Config.Paths.Root) {
+        throw "Paths.Root is missing."
+    }
+
+    if (-not $Config.Paths.LogDirectory) {
+        throw "Paths.LogDirectory is missing."
+    }
+
+    if (-not $Config.Paths.StateDirectory) {
+        throw "Paths.StateDirectory is missing."
+    }
+
+    Write-Host "[OK] Paths"
 
     #
     # Notifications
@@ -60,7 +72,6 @@ function Test-HTPConfiguration {
                 }
 
                 Write-Host "[OK] Pushover Credentials"
-
                 break
             }
 
