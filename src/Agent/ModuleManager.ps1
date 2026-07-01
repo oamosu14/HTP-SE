@@ -34,15 +34,20 @@ function Start-HTPModules {
         -Path $PSScriptRoot `
         -ChildPath "..\Modules"
 
-    $ModulesRoot = (Resolve-Path $ModulesRoot).Path
+    $ModuleFiles = @()
 
-    $Modules = @(Get-ChildItem `
-        -Path $ModulesRoot `
-        -Filter *.ps1 `
-        -File `
-        -ErrorAction SilentlyContinue)
+    foreach ($Folder in Get-ChildItem -Path $ModulesRoot -Directory) {
 
-    if ($Modules.Count -eq 0) {
+        $MainModule = Join-Path `
+            -Path $Folder.FullName `
+            -ChildPath "$($Folder.Name).ps1"
+
+        if (Test-Path $MainModule) {
+            $ModuleFiles += Get-Item $MainModule
+        }
+    }
+
+    if ($ModuleFiles.Count -eq 0) {
 
         Write-Host "No endpoint modules installed."
 
@@ -51,28 +56,24 @@ function Start-HTPModules {
             -Module "ModuleManager" `
             -Message "No endpoint modules found."
 
+        Write-HTPJsonLog `
+            -Context $Context `
+            -Module "ModuleManager" `
+            -Message "No endpoint modules found."
+
         return
     }
 
-    foreach ($Module in $Modules) {
+    foreach ($Module in $ModuleFiles) {
 
-        Write-Host "Loading $($Module.Name)"
+        Write-Host "Loading $($Module.BaseName)"
 
-        #
-        # Remove any previously loaded module entry point
-        #
         Remove-Item `
             -Path Function:\Start-HTPModule `
             -ErrorAction SilentlyContinue
 
-        #
-        # Load the module
-        #
         . $Module.FullName
 
-        #
-        # Execute module entry point
-        #
         if (Get-Command Start-HTPModule -ErrorAction SilentlyContinue) {
 
             Start-HTPModule
@@ -106,10 +107,10 @@ function Start-HTPModules {
     Write-HTPLog `
         -Context $Context `
         -Module "ModuleManager" `
-        -Message "$($Modules.Count) module(s) loaded."
+        -Message "$($ModuleFiles.Count) module(s) loaded."
 
     Write-HTPJsonLog `
         -Context $Context `
         -Module "ModuleManager" `
-        -Message "$($Modules.Count) module(s) loaded."
+        -Message "$($ModuleFiles.Count) module(s) loaded."
 }
